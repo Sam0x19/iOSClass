@@ -36,13 +36,16 @@ class ViewController: UIViewController
     @IBAction func invertDisplay() {
         if displayValue != 0 {
             if userIsInTheMiddleOfTypingANumber {
-                displayValue = -displayValue!
+                if display.text!.rangeOfString("-") == nil {               display.text = "-" + display.text!
+                } else {
+                    display.text = dropFirst(display.text!)
+                }
             } else {
                 if operandStack.count >= 1 {
                     displayValue = -operandStack.removeLast()
+                    enter()
                 }
             }
-            userIsInTheMiddleOfTypingANumber = true
         }
     }
     
@@ -102,6 +105,16 @@ class ViewController: UIViewController
         history.text! = ""
         operandStack.removeAll()
         userIsInTheMiddleOfTypingANumber = false
+    }
+    
+    @IBAction func backspace() {
+        if userIsInTheMiddleOfTypingANumber {
+            if count(display.text!) > 1 {
+                display.text = dropLast(display.text!)
+            } else {
+                displayValue = nil
+            }
+        }
     }
     
     var displayValue: Double? {
