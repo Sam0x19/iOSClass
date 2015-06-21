@@ -33,6 +33,19 @@ class ViewController: UIViewController
         }
     }
     
+    @IBAction func invertDisplay() {
+        if displayValue != 0 {
+            if userIsInTheMiddleOfTypingANumber {
+                displayValue = -displayValue
+            } else {
+                if operandStack.count >= 1 {
+                    displayValue = -operandStack.removeLast()
+                }
+            }
+            userIsInTheMiddleOfTypingANumber = true
+        }
+    }
+    
     @IBAction func operate(sender: UIButton) {
         let operation = sender.currentTitle!
         if userIsInTheMiddleOfTypingANumber {
@@ -87,6 +100,7 @@ class ViewController: UIViewController
     @IBAction func clear() {
         display.text! = "0"
         history.text! = ""
+        operandStack.removeAll()
         userIsInTheMiddleOfTypingANumber = false
     }
     
