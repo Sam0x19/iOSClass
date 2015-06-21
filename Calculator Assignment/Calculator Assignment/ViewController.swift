@@ -36,7 +36,7 @@ class ViewController: UIViewController
     @IBAction func invertDisplay() {
         if displayValue != 0 {
             if userIsInTheMiddleOfTypingANumber {
-                displayValue = -displayValue
+                displayValue = -displayValue!
             } else {
                 if operandStack.count >= 1 {
                     displayValue = -operandStack.removeLast()
@@ -92,24 +92,28 @@ class ViewController: UIViewController
     
     @IBAction func enter() {
         userIsInTheMiddleOfTypingANumber = false
-        operandStack.append(displayValue)
+        operandStack.append(displayValue!)
         println("operandStack = \(operandStack)")
         appendToHistory(display.text!)
     }
     
     @IBAction func clear() {
-        display.text! = "0"
+        displayValue = nil
         history.text! = ""
         operandStack.removeAll()
         userIsInTheMiddleOfTypingANumber = false
     }
     
-    var displayValue: Double {
+    var displayValue: Double? {
         get {
-            return NSNumberFormatter().numberFromString(display.text!)!.doubleValue
+            return NSNumberFormatter().numberFromString(display.text!)?.doubleValue
         }
         set {
-            display.text = "\(newValue)"
+            if newValue == nil {
+                display.text = "0"
+            } else {
+                display.text = "\(newValue!)"
+            }
             userIsInTheMiddleOfTypingANumber = false
         }
     }
