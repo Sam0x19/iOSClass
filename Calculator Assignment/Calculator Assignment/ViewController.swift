@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController
 {
     @IBOutlet weak var display: UILabel!
+    @IBOutlet weak var history: UILabel!
     
     var userIsInTheMiddleOfTypingANumber = false
     
@@ -37,6 +38,7 @@ class ViewController: UIViewController
         if userIsInTheMiddleOfTypingANumber {
             enter()
         }
+        appendToHistory(operation)
         switch operation {
         case "×": performOperation { $0 * $1 }
         case "÷": performOperation { $1 / $0 }
@@ -69,12 +71,17 @@ class ViewController: UIViewController
         enter()
     }
     
+    private func appendToHistory(entry: String) {
+        history.text = history.text! + " " + entry
+    }
+    
     var operandStack = Array<Double>()
     
     @IBAction func enter() {
         userIsInTheMiddleOfTypingANumber = false
         operandStack.append(displayValue)
         println("operandStack = \(operandStack)")
+        appendToHistory(display.text!)
     }
     
     var displayValue: Double {
