@@ -66,6 +66,7 @@ class ViewController: UIViewController
         case "π": performOperation { M_PI }
         default: break
         }
+        appendToHistory("=")
     }
     
     private func performOperation(operation: (Double, Double) -> Double) {
@@ -88,6 +89,10 @@ class ViewController: UIViewController
     }
     
     private func appendToHistory(entry: String) {
+        if history.text!.rangeOfString("=") != nil {
+            history.text = dropLast(history.text!)
+            history.text = dropLast(history.text!)
+        }
         history.text = history.text! + " " + entry
     }
     
