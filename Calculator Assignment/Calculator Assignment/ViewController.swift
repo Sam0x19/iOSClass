@@ -84,6 +84,12 @@ class ViewController: UIViewController
         appendToHistory(display.text!)
     }
     
+    @IBAction func clear() {
+        display.text! = "0"
+        history.text! = ""
+        userIsInTheMiddleOfTypingANumber = false
+    }
+    
     var displayValue: Double {
         get {
             return NSNumberFormatter().numberFromString(display.text!)!.doubleValue
