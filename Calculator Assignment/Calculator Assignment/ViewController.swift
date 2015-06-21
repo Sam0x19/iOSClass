@@ -24,6 +24,14 @@ class ViewController: UIViewController
         }
     }
     
+    @IBAction func appendDecimal(sender: UIButton) {
+        if !userIsInTheMiddleOfTypingANumber ||
+            display.text!.rangeOfString(sender.currentTitle!) == nil {
+            display.text = display.text! + sender.currentTitle!
+            userIsInTheMiddleOfTypingANumber = true
+        }
+    }
+    
     @IBAction func operate(sender: UIButton) {
         let operation = sender.currentTitle!
         if userIsInTheMiddleOfTypingANumber {
